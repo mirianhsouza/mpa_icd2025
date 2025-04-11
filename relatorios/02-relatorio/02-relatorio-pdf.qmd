@@ -2,19 +2,20 @@
 title: "Caso Junglivet Whisky Company"
 subtitle: "Introdução à CRISP-DM, RStudio, Sistema Quarto e Linguagem R"
 lang: pt-BR
-author: "Mírian Helena de Souza Ribeiro"
+author: "Seu Nome"
 date: 2025-04-02
+date-format: long
 format: 
-  html:
-    theme: cosmo
-    embed-resources: true
+  typst: 
+    columns: 1
     toc: true
+    papersize: a4
+    fontsize: 12pt
     number-sections: true
-    code-fold: true
 execute:
-  message: false
-  warning: false
   echo: true
+  warning: false
+  message: false
 ---
 
 
