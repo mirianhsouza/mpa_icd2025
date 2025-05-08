@@ -4,18 +4,13 @@ subtitle: "Introdução à CRISP-DM, RStudio, Sistema Quarto e Linguagem R"
 lang: pt-BR
 author: "Seu Nome"
 date: 2025-04-02
-date-format: long
 format: 
-  typst: 
-    columns: 1
-    toc: true
-    papersize: a4
-    fontsize: 12pt
+  docx:
     number-sections: true
 execute:
-  echo: true
-  warning: false
   message: false
+  warning: false
+  echo: true
 ---
 
 
