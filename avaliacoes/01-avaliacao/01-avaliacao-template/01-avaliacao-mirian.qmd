@@ -1,0 +1,287 @@
+---
+title: "Resolucão da Avaliação 1"
+subtitle: "Introdução à Ciência de Dados - 2025 <br> Mestrado em Administração"
+author: "Mírian Helana de Souza Ribeiro"
+title-block-banner: "#27445C"
+format:
+  html:
+    embed-resources: true
+    page-layout: article
+    toc: true
+    toc-location: left
+lang: "pt"
+date: 2025-05-29
+date-format: long
+execute: 
+  eval: false
+  echo: true
+  warning: false
+  message: false
+crossref:
+  fig-prefix: 'Fig.'
+  tbl-prefix: 'Tab.'
+---
+
+
+```{r}
+#| label: setup
+#| echo: false
+
+# configura a exibição de números
+options(digits = 3, scipen = 99)
+
+# Carrega os pacotes necessários
+library(here)       # Para utilizar caminhos relativos no projeto
+library(tidyverse)  # Metapacote que inclui reador, dplyr, tidyr...
+library(farr)       # Para usar as 3 data frames
+
+# Carrega as df do pacote farr
+
+## carrega a df aus_banks
+data("aus_banks")
+
+## carrega a df aus_bank_funds
+data("aus_bank_funds")
+
+## carrega a df aus_bank_rets
+data("aus_bank_rets")
+```
+
+
+
+## Questão 1 
+
+
+**a)** 
+
+O uso de planilhas de excel e softwares com interface gráfica pode prejudicar tanto a credibilidade científica quanto a eficiência operacional dos projeto.  e trazer grandes prejuízos para as empresas. Essas ferramentas dificultam a reprodutibilidade das análises, não deixam claro o passo a passo do que foi feito, comprometendo a transparência e a confiança nos resultados. Além disso, o trabalho manual torna os processos mais lentos, sujeitos a erros e difíceis de automatizar, o que atrasa as entregas e reduz a produtividade da equipe. O empregado que esta apto a controlar estas planilhas pode acontecer de amanhã não estar mais presente na empresa, dificultando e talvez até atrasando todo o processo  e trazer grandes prejuízos para a empresa. Por isso, é importante modernizar as práticas com ferramentas que garantam mais controle, agilidade e confiança nos dados. 
+
+**b)** 
+
+A metodologia CRISP-DM ajuda a organizar o trabalho com dados em etapas mais claras. Melhorando a qualidade e a confiança nos dados das pesquisas,  deixando as análises dos resulatados mais rápidas, alinhadas e com eficiencia para as empresas. 
+
+**c)** 
+
+Ferramentas como R permitem realizar análises estatísticas facilitando a reprodução exata dos resultados. O quarton permite criar relatórios automáticos e atualizáveis, unindo texto, análise e visualizações de forma transparente. Já o uso de GitHub, controla as atualizações de versões, permitindo rastrear mudanças, comparar resultados e manter histórico completo dos projetos. Essas ferramentas juntas promovem a transparência dos processos e as mesmas podem ser auditadas, atendendo tanto às exigências acadêmicas quanto às demandas das empresas. 
+
+## Questão 2
+
+
+**a)**
+
+```{r}
+# Importando o arquivo de dados 
+
+## Definindo o caminho relativo do arquivo 
+caminho <- here::here("data/raw/dados_franco2022.csv")
+
+## 1.2 Importa o arquivo com a função read_csv
+dados_franco_2022 <- readr::read_csv(caminho)
+
+dplyr::glimpse(dados_franco)
+
+```
+
+
+
+
+**b)** 
+
+```{r}
+
+# Aplicar o pipeline para renomear as colunas
+dados_franco_limpos <- meus_dados %>%
+  rename(
+    mes = data,
+    indice_epu = EPU,
+    indice_iem = IEM,
+    icc_fec = ICCFEC,
+    icc_fgv = ICCFGV
+  )
+
+# Verificar a estrutura dos dados renomeados
+glimpse(dados_franco_limpos)
+
+
+```
+
+
+## Questão 3
+
+
+**a)** 
+
+```{r}
+# Dados simulando relatório do BCB sobre patrimônio de referência
+patrimonio_wide <- tribble(
+  ~instituicao,              ~`2019`, ~`2020`, ~`2021`, ~`2022`, ~`2023`,
+  "Itaú Unibanco",           186.4,    203.7,   218.9,   234.5,   251.2,
+  "Banco do Brasil",         142.8,    156.3,   169.7,   182.1,   198.4,
+  "Bradesco",                158.7,    171.2,   184.6,   197.8,   213.3,
+  "Santander Brasil",         89.3,     96.7,   104.2,   112.8,   121.5,
+  "Caixa Econômica Federal", 118.6,    127.9,   138.4,   149.7,   162.3,
+  "BTG Pactual",              28.4,     32.1,    36.8,    42.3,    48.7
+)
+
+# Visualiza os dados em formato amplo
+patrimonio_wide
+```
+
+
+```{r}
+# Pipeline de transformação de formato amplo para formato longo
+patrimonio_longo <- patrimonio_wide %>%
+  pivot_longer(
+    cols = `2019`:`2023`,
+    names_to = "ano",
+    values_to = "patrimonio_referencia"
+  ) %>%
+  mutate(ano = as.numeric(ano)) %>%
+  arrange(instituicao, ano)
+
+# Exibe o resultado completo da transformação
+patrimonio_longo
+```
+
+
+
+**b.1):**
+
+```{r}
+library(dplyr)
+glimpse(patrimonio_longo)
+
+```
+
+
+**b.2):** 
+
+Após a transformação dos dados do formato amplo para o formato longo com a função pivot_longer(), o data frame patrimonio_longo passou a conter 30 observações. Isso ocorre porque cada uma das 6 instituições financeiras teve seus dados de patrimônio de referência desmembrados em 5 anos distintos (2019 a 2023). Assim, foram geradas 6 instituições × 5 anos = 30 linhas, sendo que cada linha representa uma combinação única entre instituição e ano.  
+
+
+**b.3):**
+
+O data frame patrimonio_longo possui 3 variáveis após a transformação para o formato longo. Os nomes dessas variáveis são:
+
+instituicao: identifica o nome da instituição financeira.
+
+ano: indica o ano de referência para o valor do patrimônio.
+
+patrimonio_referencia: representa o valor do patrimônio de referência (em bilhões de reais) da instituição no respectivo ano.
+
+Essas variáveis permitem organizar os dados de forma adequada para análises temporais e comparações entre as diferentes instituições ao longo dos anos.
+
+
+
+## Questão 4
+
+
+**a)** 
+
+```{r}
+# Pipeline para combinar aus_banks e aus_bank_funds
+dados_combinados <- aus_bank_funds %>%
+  # join para manter todas as observações de aus_bank_funds
+  left_join(aus_banks, by = "gvkey") %>%
+  # Remove observações com valores ausentes
+  drop_na() %>%
+  # Seleciona apenas as variáveis solicitadas
+  select(co_name, ticker, datadate, at, ceq) %>%
+  # Ordena por nome do banco e depois por data
+  arrange(co_name, datadate)
+
+# Exibe as primeiras 10 linhas
+head(dados_combinados, 10)
+```
+
+
+
+
+**b)** 
+
+```{r}
+# Pipeline para calcular equity ratio e criar ranking
+ranking_equity <- dados_combinados %>%
+  # Calcula o equity ratio (proporção patrimônio líquido / ativo total)
+  mutate(equity_ratio = ceq / at) %>%
+  # Agrupa os dados por banco
+  group_by(co_name) %>%
+  # Calcula o equity ratio médio de cada banco 
+  summarise(equity_ratio_medio = mean(equity_ratio)) %>%
+  # Ordena do maior para o menor equity ratio médio
+  arrange(desc(equity_ratio_medio))
+
+# Exibe a tabela completa do ranking
+ranking_equity
+```
+
+```{r}
+#Identificar o banco com maior equity ratio médio
+head(ranking_equity, 1)
+```
+## Questão 5
+
+
+**a)** 
+
+```{r}
+# Pipeline para integrar as três tabelas
+dados_integrados <- aus_bank_funds %>%
+  # Primeiro join: adiciona informações dos bancos (nome e ticker)
+  inner_join(aus_banks, by = "gvkey") %>%
+  # Segundo join: adiciona dados de retornos das ações (retorno mensal)
+  inner_join(aus_bank_rets, by = c("gvkey", "datadate")) %>%
+  # Remove possíveis valores ausentes para garantir dados completos
+  drop_na()
+
+# Verifica a estrutura dos dados integrados
+str(dados_integrados)
+```
+
+
+**b)** 
+
+```{r}
+# Calcula ativo total médio por banco
+ativo_medio_bancos <- dados_integrados %>%
+  group_by(co_name) %>%
+  summarise(ativo_medio = mean(at, na.rm = TRUE)) %>%
+  arrange(desc(ativo_medio))
+
+# Exibe os resultados
+ativo_medio_bancos
+```
+
+
+
+
+**c)** 
+
+```{r}
+# Pipeline completo integrando dados de ativo e retorno
+analise_categorias <- dados_integrados %>%
+  # Calcula ativo médio e retorno médio por banco
+  group_by(co_name) %>%
+  summarise(
+    ativo_medio = mean(at, na.rm = TRUE),
+    retorno_medio = mean(ret, na.rm = TRUE)
+  ) %>%
+  # Cria categorias de tamanho usando case_when
+  mutate(
+    categoria_tamanho = case_when(
+      ativo_medio < 50000 ~ "Pequeno",
+      ativo_medio >= 50000 & ativo_medio <= 200000 ~ "Médio",
+      ativo_medio > 200000 ~ "Grande"
+    )
+  )
+
+# Exibe o resultado
+analise_categorias
+```
+
+
+
+
+
+
+
