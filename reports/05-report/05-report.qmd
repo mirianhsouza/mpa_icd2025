@@ -2,7 +2,7 @@
 title: "Introdução à Ciência de Dados"
 subtitle: "Aula 5"
 lang: pt-BR
-author: "Seu Nome"
+author: "Mírian Helena de Souza Ribeiro"
 date: 2025-05-08
 format: 
   html:
@@ -272,7 +272,16 @@ Transforme estes dados para o formato "longo" (tidy), criando as variáveis
 ## Solução do Exercício 1
 
 ```{r}
-# seu código aqui
+# Transforman para o formato longo/organizado
+venda_organizada <- vendas_lojas %>%
+  pivot_longer(
+    cols = -loja, # todas as colunas exceto "empresa"
+    names_to = c("trimestre"), # nomes de duas novas colunas
+    values_to = "vendas" # nome de nova coluna para receber os valores da receita
+  )
+
+# Visualiza o resultado
+venda_organizada
 ```
 
 
@@ -310,7 +319,16 @@ Transforme estes dados para o formato adequado para estas análises.
 ## Solução do Exercício 2
 
 ```{r}
-# seu código aqui
+# Transforman para o formato longo/organizado
+marketing_organizado <- investimentos_marketing %>%
+  pivot_longer(
+    cols = -plataforma, # todas as colunas exceto "plataforma"
+    names_to = c("mês"), # nomes de duas novas colunas
+    values_to = "investimentos" # nome de nova coluna para receber os valores da receita
+  )
+
+# Visualiza o resultado
+marketing_organizado
 ```
 
 
@@ -325,7 +343,7 @@ enviados no seguinte formato:
 
 ```{r}
 incidadores_dptos <- tribble(
-  ~departamento, ~Jan_receita, ~Jan_despesa, ~Fev_receita, ~Fev_despesa, ~Mar_receita, ~Mar_despesa, ~Abr_receita, ~Abr_despesa, ~Mai_receita, ~Mai_despesa, ~Jun_receita, ~Jun_despesa,
+~departamento, ~Jan_receita, ~Jan_despesa, ~Fev_receita, ~Fev_despesa, ~Mar_receita, ~Mar_despesa, ~Abr_receita, ~Abr_despesa, ~Mai_receita, ~Mai_despesa, ~Jun_receita, ~Jun_despesa,
   "Vendas", 120000, 85000, 125000, 82000, 135000, 90000, 122000, 88000, 140000, 91000, 145000, 94000,
   "Marketing", 45000, 38000, 52000, 46000, 48000, 42000, 55000, 49000, 58000, 52000, 62000, 54000,
   "Produção", 180000, 152000, 185000, 158000, 192000, 160000, 195000, 162000, 210000, 170000, 215000, 175000,
@@ -335,15 +353,21 @@ incidadores_dptos <- tribble(
 # Visualiza a data frame criada
 incidadores_dptos
 ```
-
 Reorganize estes dados para o formato longo, separando corretamente as 
 informações de mês, indicador (receita/despesa) e valor.
-
 
 ## Solução do Exercício 3
 
 ```{r}
-# seu código aqui
+incidadores_dptos_organizada <- incidadores_dptos %>%
+  pivot_longer(
+    cols = -departamento, # todas as colunas exceto "departamento"
+    names_to = c("mês", "indicador"), # nomes de duas novas colunas
+    names_sep = "_", # nomes de duas novas colunas
+    values_to = "valor" # nome de nova coluna para receber os valores da receita
+    )
+# Visualiza o resultado
+incidadores_dptos_organizada
 ```
 
 
@@ -474,7 +498,7 @@ relatorio_expectativa <- gapminder %>%
   # Filtra apenas os dados de 2007
   filter(year == 2007) %>%
   # Agrupa por continente
-  group_by(continent) %>%
+group_by(continent) %>%
   # Calcula estatísticas resumidas
   summarize(
     expectativa_media = mean(lifeExp),
@@ -692,9 +716,9 @@ gapminder %>% # Pegue os dados gapminder, então...
 Nomeie os resumos calculados com summarize:
 
 ```{r}
-gapminder %>% # Pegue os dados gapminder, então...
-  filter(year == 2007) %>% # Filtre para apenas o ano 2007, então...
-  group_by(continent) %>% # Agrupe por continente, então...
+gapminder %>% # Pegue os dados gapminder, 
+  filter(year == 2007) %>% # Filtre para apenas o ano 2007,
+  group_by(continent) %>% # Agrupe por continente,
   summarize( # Calcule resumos:
     exp_vida_media = mean(lifeExp), # expectativa de vida média
     populacao_total = sum(pop) # população total
@@ -736,7 +760,8 @@ a expectativa de vida:
 #| eval: false
 
 dados_expectativa <- gapminder %>%
-  select(___, ___, ___)
+  select(year, country, lifeExp)
+dados_expectativa
 ```
 
 
@@ -744,7 +769,10 @@ dados_expectativa <- gapminder %>%
 e PIB per capita.
 
 ```{r}
-# seu código aqui
+dados_sem_pop_pib <- gapminder %>%
+  dplyr::select(-pop, -gdpPercap)
+dados_sem_pop_pib
+
 ```
 
 
@@ -757,12 +785,8 @@ começam com a letra "c":
 #| eval: false
 
 variaveis_com_c <- gapminder %>%
-  select(___(___))
-```
-
-
-```{r}
-# seu código aqui
+  select(starts_with("c"))
+variaveis_com_c
 ```
 
 
@@ -771,7 +795,9 @@ variaveis_com_c <- gapminder %>%
 até "pop" (em sequência na tabela).
 
 ```{r}
-# seu código aqui
+variaveis_sequencia <- gapminder %>% 
+  select(country:pop)
+variaveis_sequencia
 ```
 
 
@@ -783,7 +809,9 @@ diferentes na mesma instrução:
 
 
 ```{r}
-# seu código aqui
+variaveis_combinadas <- gapminder %>% 
+  select(contains("p") | ends_with("p"))
+variaveis_combinadas
 ```
 
 
@@ -948,7 +976,7 @@ Países europeus com alta expectativa de vida em 2007?
 ```{r}
 resultado_final <- gapminder %>%
   # Filtra por continente, ano e expectativa de vida
-  filter(continent == "Europe", year == 2007, lifeExp > 78) %>%
+  filter(continent == "Europe" & year == 2007 & lifeExp > 78) %>%
   # Seleciona variáveis de interesse
   select(country, lifeExp, gdpPercap) %>%
   # Ordena por expectativa de vida (decrescente)
@@ -980,14 +1008,19 @@ do Sul no ano de 2007:
 #| eval: false
 
 paises_america_2007 <- gapminder %>%
-  filter(continent == "___", year == ___)
+  filter(continent == "Americas" & year == 2007)
+head(paises_america_2007)
 ```
 
 
 2. Filtre a data frame gapminder para mostrar apenas os dados do Brasil:
 
 ```{r}
-# seu codigo aqui
+#| eval: false
+
+dados_brasil <- gapminder %>%
+  filter(country == "Brazil")
+head(dados_brasil)
 ```
 
 
@@ -1000,7 +1033,15 @@ paises_america_2007 <- gapminder %>%
 - Dados do ano 2007
 
 ```{r}
-# seu codigo aqui
+paises_asia_2007_pop50M <- gapminder %>%
+  filter(
+    continent == "Asia", 
+    pop > 50000000, 
+    year == 2007
+  ) %>%
+  arrange(desc(pop))
+
+paises_asia_2007_pop50M
 ```
 
 
@@ -1008,7 +1049,14 @@ paises_america_2007 <- gapminder %>%
 mas PIB per capita abaixo de 10.000 dólares em 2007.
 
 ```{r}
-# seu codigo aqui
+pais_desafio <- gapminder %>%
+  filter(
+    lifeExp > 75§
+    gdpPercap < 10000§
+    year == 2007
+  )
+
+print (pais_desafio, n=inf)
 ```
 
 
@@ -1174,10 +1222,10 @@ paises_classificados
 a população para milhões:
 
 ```{r}
-#| eval: false
-
-gapminder %>%
-  mutate(pop_em_milhoes = ___)
+  gapminder %>%
+  mutate(pop_em_milhoes = pop / 1000000) %>%
+  select(country, year, pop, pop_em_milhoes) %>%
+  head (5)
 ```
 
 
@@ -1185,7 +1233,8 @@ gapminder %>%
 (PIB per capita × população) para cada país.
 
 ```{r}
-# seu codigo aqui
+gapminder%>%
+  mutate(pib_total = gdpPercap * pop)
 ```
 
 
@@ -1197,7 +1246,10 @@ seja "Sim" quando a população for maior que 50 milhões e "Não"
 caso contrário.
 
 ```{r}
-# seu codigo aqui
+gapminder %>%
+  mutate(economia_grande = ifelse(pop > 50000000, "Sim", "Não")) %>%
+  select(country, year, pop, economia_grande) %>%
+  head(5)
 ```
 
 
@@ -1209,7 +1261,14 @@ os países em três categorias baseadas na expectativa de vida:
 - "Alta": mais de 75 anos
 
 ```{r}
-# seu codigo aqui
+gapminder %>%
+  filter(year == 2007) %>%
+  mutate(expectativa_vida = case_when(
+      lifeExp < 60 ~ "Baixa",
+      lifeExp >= 60 & lifeExp <= 75 ~ "Média",
+      lifeExp > 75 ~ "Alta" )) %>%
+  print(multiplas_categorias, n= inf) %>%
+  head(6)
 ```
 
 
@@ -1301,18 +1360,19 @@ tendencias_por_continente %>%
 vida por continente:
 
 ```{r}
-#| eval: false
-
-expectativa_por_continente <- gapminder %>%
-  group_by(___) %>%
-  summarize(expectativa_media = ___(___))
+gapminder %>%
+  group_by(continent) %>%
+  summarize(expectativa_vida = mean(lifeExp))
 ```
 
 
 2. Calcule a população total por continente no ano de 2007.
 
 ```{r}
-# seu codigo aqui
+gapminder %>%
+  filter(year == 2007) %>%
+  group_by(continent) %>%
+  summarize(populacao_total = sum(pop))
 ```
 
 
@@ -1326,7 +1386,13 @@ tabela que mostre, para cada continente:
 - O PIB per capita da melhor "filial" (máximo)
 
 ```{r}
-# seu codigo aqui
+gapminder %>%
+  group_by(continent) %>%
+  summarize(
+    numero_de_filiais = n_distinct(country),            
+    pib_per_capita_medio = mean(gdpPercap),
+    pib_per_capita_maximo = max(gdpPercap) 
+  )
 ```
 
 
@@ -1335,11 +1401,12 @@ de vida média do continente americano ao longo dos anos (dica: agrupe
 por ano, filtre para mostrar apenas as Américas).
 
 ```{r}
-# seu codigo aqui
+gapminder %>%
+  filter(continent == "Americas") %>%
+  group_by(year) %>%
+  summarize(expectativa_vida_media = mean(lifeExp)) %>%
+  arrange(year)
 ```
-
-
-
 
 
 # Função arrange()
@@ -1363,8 +1430,8 @@ rapidamente os países mais promissores para expansão:
 ranking_paises <- gapminder %>%
   filter(year == 2007) %>%                # Filtra dados apenas de 2007
   select(country, continent, gdpPercap) %>% # Seleciona colunas relevantes
-  arrange(desc(gdpPercap)) %>%            # Ordena do maior para o menor PIB
-  head(6)                                # Mostra os 10 primeiros resultados
+  arrange(desc(gdpPercap)) %>% # Ordena do maior para o menor PIB
+  head(6)              # Mostra os 10 primeiros resultados
 
 # Visualiza o resultado
 ranking_paises
@@ -1385,18 +1452,25 @@ de mais atenção (ordenando do menor para o maior).
 de vida (do maior para o menor):
 
 ```{r}
-#| eval: false
+expectativa_de_vida <- gapminder %>%
+  filter(year == 2007) %>%             
+  arrange(desc(lifeExp))
 
-paises_ordenados <- gapminder %>%
-  filter(year == 2007) %>%
-  arrange(___(___))
+# Visualiza o resultado
+expectativa_de_vida 
 ```
 
 
 2. Escreva um código para listar os 5 países com menor PIB per capita em 2007.
 
 ```{r}
-# seu codigo aqui
+paises_menor_pib <- gapminder %>%
+  filter(year == 2007) %>%              
+  arrange(gdpPercap) %>%                
+  head(5)  
+
+# Visualiza o resultado
+paises_menor_pib
 ```
 
 
@@ -1407,7 +1481,12 @@ empresa. Crie uma lista dos países das Américas ordenados por
 população (do maior para o menor) em 2007.
 
 ```{r}
-# seu codigo aqui
+paises_americas <- gapminder %>%
+  filter(year == 2007, continent == "Americas") %>%  
+  arrange(desc(pop)) 
+
+# Visualiza o resultado
+paises_americas
 ```
 
 
@@ -1415,7 +1494,14 @@ população (do maior para o menor) em 2007.
 de vida média de seus países em 2007. Use group_by(), summarize() e arrange().
 
 ```{r}
-# seu codigo aqui
+expectativa_vida_media_continentes <- gapminder %>%
+  filter(year == 2007) %>%                 
+  group_by(continent) %>%                   
+  summarize(expectativa_vida_media = mean(lifeExp)) %>%  
+  arrange(desc(expectativa_vida_media))
+
+# Visualiza o resultado
+expectativa_vida_media_continentes
 ```
 
 
@@ -1457,7 +1543,10 @@ relatorio_expectativa
 #| echo: false
 #| eval: true
 #| html-table-processing: none
+#| analisando a @ tbl - 1 
 
+ 
+ 
 
 # inicia com a df contendo o resultado do pipeline
 relatorio_expectativa %>%
@@ -1505,6 +1594,7 @@ relatorio_expectativa %>%
   )
 ```
 
+ 
 
 
 
@@ -1595,7 +1685,7 @@ Análise das Vendas Mensais de um Produto Específico:
 vendas_mensais_notebookpro <- dados_vendas_longo %>%
   filter(produto == "Notebook Pro") %>%
   select(produto, mes, valor_vendas) %>%
-  arrange(mes)
+  arrange(desc(valor_vendas))
 
 # visualiza o resultado
 vendas_mensais_notebookpro
