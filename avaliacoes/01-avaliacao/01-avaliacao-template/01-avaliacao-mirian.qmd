@@ -13,7 +13,7 @@ lang: "pt"
 date: 2025-05-29
 date-format: long
 execute: 
-  eval: false
+  eval: true
   echo: true
   warning: false
   message: false
@@ -78,7 +78,7 @@ caminho <- here::here("data/raw/dados_franco2022.csv")
 ## 1.2 Importa o arquivo com a função read_csv
 dados_franco_2022 <- readr::read_csv(caminho)
 
-dplyr::glimpse(dados_franco)
+dplyr::glimpse(dados_franco_2022)
 
 ```
 
@@ -90,7 +90,7 @@ dplyr::glimpse(dados_franco)
 ```{r}
 
 # Aplicar o pipeline para renomear as colunas
-dados_franco_limpos <- meus_dados %>%
+dados_franco_limpos <- dados_franco_2022 %>%
   rename(
     mes = data,
     indice_epu = EPU,

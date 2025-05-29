@@ -2250,60 +2250,114 @@ background: #27445C;
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1.2 Importa o arquivo com a função read_csv</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>dados_franco_2022 <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(caminho)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(dados_franco)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(dados_franco_2022)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 148
+Columns: 6
+$ data   &lt;date&gt; 2005-09-01, 2005-10-01, 2005-11-01, 2005-12-01, 2006-01-01, 20…
+$ EPU    &lt;dbl&gt; 90.7, 61.2, 152.6, 153.9, 140.1, 41.4, 126.2, 80.3, 95.1, 142.3…
+$ IEM    &lt;dbl&gt; 94.1, 92.6, 100.8, 91.3, 95.3, 90.0, 94.4, 91.3, 96.6, 95.3, 92…
+$ INC    &lt;dbl&gt; 0.381, 0.357, 0.391, 0.417, 0.414, 0.461, 0.502, 0.467, 0.495, …
+$ ICCFEC &lt;dbl&gt; 109, 108, 117, 130, 132, 138, 138, 132, 138, 134, 134, 128, 131…
+$ ICCFGV &lt;dbl&gt; 87.1, 89.6, 88.4, 89.0, 95.7, 94.8, 93.0, 91.4, 90.4, 90.1, 90.…</code></pre>
+</div>
 </div>
 <p><strong>b)</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aplicar o pipeline para renomear as colunas</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dados_franco_limpos <span class="ot">&lt;-</span> meus_dados <span class="sc">%&gt;%</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mes =</span> data,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">indice_epu =</span> EPU,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">indice_iem =</span> IEM,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">icc_fec =</span> ICCFEC,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">icc_fgv =</span> ICCFGV</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar a estrutura dos dados renomeados</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(dados_franco_limpos)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aplicar o pipeline para renomear as colunas</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dados_franco_limpos <span class="ot">&lt;-</span> dados_franco_2022 <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mes =</span> data,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">indice_epu =</span> EPU,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">indice_iem =</span> IEM,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">icc_fec =</span> ICCFEC,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">icc_fgv =</span> ICCFGV</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar a estrutura dos dados renomeados</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(dados_franco_limpos)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 148
+Columns: 6
+$ mes        &lt;date&gt; 2005-09-01, 2005-10-01, 2005-11-01, 2005-12-01, 2006-01-01…
+$ indice_epu &lt;dbl&gt; 90.7, 61.2, 152.6, 153.9, 140.1, 41.4, 126.2, 80.3, 95.1, 1…
+$ indice_iem &lt;dbl&gt; 94.1, 92.6, 100.8, 91.3, 95.3, 90.0, 94.4, 91.3, 96.6, 95.3…
+$ INC        &lt;dbl&gt; 0.381, 0.357, 0.391, 0.417, 0.414, 0.461, 0.502, 0.467, 0.4…
+$ icc_fec    &lt;dbl&gt; 109, 108, 117, 130, 132, 138, 138, 132, 138, 134, 134, 128,…
+$ icc_fgv    &lt;dbl&gt; 87.1, 89.6, 88.4, 89.0, 95.7, 94.8, 93.0, 91.4, 90.4, 90.1,…</code></pre>
+</div>
 </div>
 </section>
 <section id="questão-3" class="level2">
 <h2 class="anchored" data-anchor-id="questão-3">Questão 3</h2>
 <p><strong>a)</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dados simulando relatório do BCB sobre patrimônio de referência</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>patrimonio_wide <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>instituicao,              <span class="sc">~</span><span class="st">`</span><span class="at">2019</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">2020</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">2021</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">2022</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">2023</span><span class="st">`</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Itaú Unibanco&quot;</span>,           <span class="fl">186.4</span>,    <span class="fl">203.7</span>,   <span class="fl">218.9</span>,   <span class="fl">234.5</span>,   <span class="fl">251.2</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Banco do Brasil&quot;</span>,         <span class="fl">142.8</span>,    <span class="fl">156.3</span>,   <span class="fl">169.7</span>,   <span class="fl">182.1</span>,   <span class="fl">198.4</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Bradesco&quot;</span>,                <span class="fl">158.7</span>,    <span class="fl">171.2</span>,   <span class="fl">184.6</span>,   <span class="fl">197.8</span>,   <span class="fl">213.3</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Santander Brasil&quot;</span>,         <span class="fl">89.3</span>,     <span class="fl">96.7</span>,   <span class="fl">104.2</span>,   <span class="fl">112.8</span>,   <span class="fl">121.5</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Caixa Econômica Federal&quot;</span>, <span class="fl">118.6</span>,    <span class="fl">127.9</span>,   <span class="fl">138.4</span>,   <span class="fl">149.7</span>,   <span class="fl">162.3</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;BTG Pactual&quot;</span>,              <span class="fl">28.4</span>,     <span class="fl">32.1</span>,    <span class="fl">36.8</span>,    <span class="fl">42.3</span>,    <span class="fl">48.7</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualiza os dados em formato amplo</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>patrimonio_wide</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dados simulando relatório do BCB sobre patrimônio de referência</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>patrimonio_wide <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>instituicao,              <span class="sc">~</span><span class="st">`</span><span class="at">2019</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">2020</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">2021</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">2022</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">2023</span><span class="st">`</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Itaú Unibanco&quot;</span>,           <span class="fl">186.4</span>,    <span class="fl">203.7</span>,   <span class="fl">218.9</span>,   <span class="fl">234.5</span>,   <span class="fl">251.2</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Banco do Brasil&quot;</span>,         <span class="fl">142.8</span>,    <span class="fl">156.3</span>,   <span class="fl">169.7</span>,   <span class="fl">182.1</span>,   <span class="fl">198.4</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Bradesco&quot;</span>,                <span class="fl">158.7</span>,    <span class="fl">171.2</span>,   <span class="fl">184.6</span>,   <span class="fl">197.8</span>,   <span class="fl">213.3</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Santander Brasil&quot;</span>,         <span class="fl">89.3</span>,     <span class="fl">96.7</span>,   <span class="fl">104.2</span>,   <span class="fl">112.8</span>,   <span class="fl">121.5</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Caixa Econômica Federal&quot;</span>, <span class="fl">118.6</span>,    <span class="fl">127.9</span>,   <span class="fl">138.4</span>,   <span class="fl">149.7</span>,   <span class="fl">162.3</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;BTG Pactual&quot;</span>,              <span class="fl">28.4</span>,     <span class="fl">32.1</span>,    <span class="fl">36.8</span>,    <span class="fl">42.3</span>,    <span class="fl">48.7</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualiza os dados em formato amplo</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>patrimonio_wide</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  instituicao             `2019` `2020` `2021` `2022` `2023`
+  &lt;chr&gt;                    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 Itaú Unibanco            186.   204.   219.   234.   251. 
+2 Banco do Brasil          143.   156.   170.   182.   198. 
+3 Bradesco                 159.   171.   185.   198.   213. 
+4 Santander Brasil          89.3   96.7  104.   113.   122. 
+5 Caixa Econômica Federal  119.   128.   138.   150.   162. 
+6 BTG Pactual               28.4   32.1   36.8   42.3   48.7</code></pre>
+</div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pipeline de transformação de formato amplo para formato longo</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>patrimonio_longo <span class="ot">&lt;-</span> patrimonio_wide <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="st">`</span><span class="at">2019</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">2023</span><span class="st">`</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;ano&quot;</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;patrimonio_referencia&quot;</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ano =</span> <span class="fu">as.numeric</span>(ano)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(instituicao, ano)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibe o resultado completo da transformação</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>patrimonio_longo</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pipeline de transformação de formato amplo para formato longo</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>patrimonio_longo <span class="ot">&lt;-</span> patrimonio_wide <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="st">`</span><span class="at">2019</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">2023</span><span class="st">`</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;ano&quot;</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;patrimonio_referencia&quot;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ano =</span> <span class="fu">as.numeric</span>(ano)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(instituicao, ano)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibe o resultado completo da transformação</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>patrimonio_longo</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 30 × 3
+   instituicao       ano patrimonio_referencia
+   &lt;chr&gt;           &lt;dbl&gt;                 &lt;dbl&gt;
+ 1 BTG Pactual      2019                  28.4
+ 2 BTG Pactual      2020                  32.1
+ 3 BTG Pactual      2021                  36.8
+ 4 BTG Pactual      2022                  42.3
+ 5 BTG Pactual      2023                  48.7
+ 6 Banco do Brasil  2019                 143. 
+ 7 Banco do Brasil  2020                 156. 
+ 8 Banco do Brasil  2021                 170. 
+ 9 Banco do Brasil  2022                 182. 
+10 Banco do Brasil  2023                 198. 
+# ℹ 20 more rows</code></pre>
+</div>
 </div>
 <p><strong>b.1):</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(patrimonio_longo)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(patrimonio_longo)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 30
+Columns: 3
+$ instituicao           &lt;chr&gt; &quot;BTG Pactual&quot;, &quot;BTG Pactual&quot;, &quot;BTG Pactual&quot;, &quot;BT…
+$ ano                   &lt;dbl&gt; 2019, 2020, 2021, 2022, 2023, 2019, 2020, 2021, …
+$ patrimonio_referencia &lt;dbl&gt; 28.4, 32.1, 36.8, 42.3, 48.7, 142.8, 156.3, 169.…</code></pre>
+</div>
 </div>
 <p><strong>b.2):</strong></p>
 <p>Após a transformação dos dados do formato amplo para o formato longo com a função pivot_longer(), o data frame patrimonio_longo passou a conter 30 observações. Isso ocorre porque cada uma das 6 instituições financeiras teve seus dados de patrimônio de referência desmembrados em 5 anos distintos (2019 a 2023). Assim, foram geradas 6 instituições × 5 anos = 30 linhas, sendo que cada linha representa uma combinação única entre instituição e ano.</p>
@@ -2318,89 +2372,169 @@ background: #27445C;
 <h2 class="anchored" data-anchor-id="questão-4">Questão 4</h2>
 <p><strong>a)</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pipeline para combinar aus_banks e aus_bank_funds</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>dados_combinados <span class="ot">&lt;-</span> aus_bank_funds <span class="sc">%&gt;%</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># join para manter todas as observações de aus_bank_funds</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(aus_banks, <span class="at">by =</span> <span class="st">&quot;gvkey&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove observações com valores ausentes</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Seleciona apenas as variáveis solicitadas</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(co_name, ticker, datadate, at, ceq) <span class="sc">%&gt;%</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Ordena por nome do banco e depois por data</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(co_name, datadate)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibe as primeiras 10 linhas</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dados_combinados, <span class="dv">10</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pipeline para combinar aus_banks e aus_bank_funds</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>dados_combinados <span class="ot">&lt;-</span> aus_bank_funds <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># join para manter todas as observações de aus_bank_funds</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(aus_banks, <span class="at">by =</span> <span class="st">&quot;gvkey&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove observações com valores ausentes</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Seleciona apenas as variáveis solicitadas</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(co_name, ticker, datadate, at, ceq) <span class="sc">%&gt;%</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Ordena por nome do banco e depois por data</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(co_name, datadate)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibe as primeiras 10 linhas</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dados_combinados, <span class="dv">10</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 5
+   co_name                      ticker datadate        at   ceq
+   &lt;chr&gt;                        &lt;chr&gt;  &lt;date&gt;       &lt;dbl&gt; &lt;dbl&gt;
+ 1 ANZ Bank New Zealand Limited ANZ    1987-09-30  65310. 3139.
+ 2 ANZ Bank New Zealand Limited ANZ    1988-09-30  73773. 3903.
+ 3 ANZ Bank New Zealand Limited ANZ    1989-09-30  84717. 4002.
+ 4 ANZ Bank New Zealand Limited ANZ    1990-09-30  98742. 4312.
+ 5 ANZ Bank New Zealand Limited ANZ    1991-09-30  98212. 4978.
+ 6 ANZ Bank New Zealand Limited ANZ    1992-09-30 101138. 4542.
+ 7 ANZ Bank New Zealand Limited ANZ    1993-09-30  99933. 5089 
+ 8 ANZ Bank New Zealand Limited ANZ    1994-09-30 101189. 5456.
+ 9 ANZ Bank New Zealand Limited ANZ    1995-09-30 112587  5700 
+10 ANZ Bank New Zealand Limited ANZ    1996-09-30 127604  6290 </code></pre>
+</div>
 </div>
 <p><strong>b)</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pipeline para calcular equity ratio e criar ranking</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ranking_equity <span class="ot">&lt;-</span> dados_combinados <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calcula o equity ratio (proporção patrimônio líquido / ativo total)</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">equity_ratio =</span> ceq <span class="sc">/</span> at) <span class="sc">%&gt;%</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Agrupa os dados por banco</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(co_name) <span class="sc">%&gt;%</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calcula o equity ratio médio de cada banco </span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">equity_ratio_medio =</span> <span class="fu">mean</span>(equity_ratio)) <span class="sc">%&gt;%</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Ordena do maior para o menor equity ratio médio</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(equity_ratio_medio))</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibe a tabela completa do ranking</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>ranking_equity</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pipeline para calcular equity ratio e criar ranking</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ranking_equity <span class="ot">&lt;-</span> dados_combinados <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calcula o equity ratio (proporção patrimônio líquido / ativo total)</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">equity_ratio =</span> ceq <span class="sc">/</span> at) <span class="sc">%&gt;%</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Agrupa os dados por banco</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(co_name) <span class="sc">%&gt;%</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calcula o equity ratio médio de cada banco </span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">equity_ratio_medio =</span> <span class="fu">mean</span>(equity_ratio)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Ordena do maior para o menor equity ratio médio</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(equity_ratio_medio))</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibe a tabela completa do ranking</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>ranking_equity</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 2
+   co_name                           equity_ratio_medio
+   &lt;chr&gt;                                          &lt;dbl&gt;
+ 1 BNK Banking Corp Ltd                          0.133 
+ 2 National Australia Bank Ltd                   0.0649
+ 3 Commonwealth Bank of Australia                0.0631
+ 4 St. George Bank Ltd                           0.0616
+ 5 Westpac Banking Corp                          0.0589
+ 6 Bendigo and Adelaide Bank Limited             0.0566
+ 7 ANZ Bank New Zealand Limited                  0.0541
+ 8 Bank of Queensland Ltd                        0.0528
+ 9 Bank Of Western Australia                     0.0473
+10 Adelaide Bank Ltd                             0.0439</code></pre>
+</div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Identificar o banco com maior equity ratio médio</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ranking_equity, <span class="dv">1</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Identificar o banco com maior equity ratio médio</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ranking_equity, <span class="dv">1</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  co_name              equity_ratio_medio
+  &lt;chr&gt;                             &lt;dbl&gt;
+1 BNK Banking Corp Ltd              0.133</code></pre>
+</div>
 </div>
 </section>
 <section id="questão-5" class="level2">
 <h2 class="anchored" data-anchor-id="questão-5">Questão 5</h2>
 <p><strong>a)</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pipeline para integrar as três tabelas</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>dados_integrados <span class="ot">&lt;-</span> aus_bank_funds <span class="sc">%&gt;%</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Primeiro join: adiciona informações dos bancos (nome e ticker)</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(aus_banks, <span class="at">by =</span> <span class="st">&quot;gvkey&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Segundo join: adiciona dados de retornos das ações (retorno mensal)</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(aus_bank_rets, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;gvkey&quot;</span>, <span class="st">&quot;datadate&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove possíveis valores ausentes para garantir dados completos</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Verifica a estrutura dos dados integrados</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dados_integrados)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pipeline para integrar as três tabelas</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>dados_integrados <span class="ot">&lt;-</span> aus_bank_funds <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Primeiro join: adiciona informações dos bancos (nome e ticker)</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(aus_banks, <span class="at">by =</span> <span class="st">&quot;gvkey&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Segundo join: adiciona dados de retornos das ações (retorno mensal)</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(aus_bank_rets, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;gvkey&quot;</span>, <span class="st">&quot;datadate&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove possíveis valores ausentes para garantir dados completos</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Verifica a estrutura dos dados integrados</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dados_integrados)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [106 × 11] (S3: tbl_df/tbl/data.frame)
+ $ gvkey   : chr [1:106] &quot;024512&quot; &quot;024512&quot; &quot;024512&quot; &quot;024512&quot; ...
+ $ datadate: Date[1:106], format: &quot;1992-06-30&quot; &quot;1993-06-30&quot; ...
+ $ at      : num [1:106] 88340 90995 91321 99595 120103 ...
+ $ ceq     : num [1:106] 5471 5569 5965 6568 6846 ...
+ $ ib      : num [1:106] 409 443 682 983 1078 ...
+ $ xi      : num [1:106] 0 0 0 0 0 0 0 0 0 0 ...
+ $ do      : num [1:106] 0 0 0 0 0 0 0 0 0 0 ...
+ $ ticker  : chr [1:106] &quot;CBA&quot; &quot;CBA&quot; &quot;CBA&quot; &quot;CBA&quot; ...
+ $ co_name : chr [1:106] &quot;Commonwealth Bank of Australia&quot; &quot;Commonwealth Bank of Australia&quot; &quot;Commonwealth Bank of Australia&quot; &quot;Commonwealth Bank of Australia&quot; ...
+ $ ret     : num [1:106] -0.0677 0.042 -0.0384 0.0174 0.1335 ...
+ $ mkt_cap : num [1:106] 1772 2328 3509 4393 14883 ...</code></pre>
+</div>
 </div>
 <p><strong>b)</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcula ativo total médio por banco</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>ativo_medio_bancos <span class="ot">&lt;-</span> dados_integrados <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(co_name) <span class="sc">%&gt;%</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">ativo_medio =</span> <span class="fu">mean</span>(at, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(ativo_medio))</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibe os resultados</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>ativo_medio_bancos</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcula ativo total médio por banco</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>ativo_medio_bancos <span class="ot">&lt;-</span> dados_integrados <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(co_name) <span class="sc">%&gt;%</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">ativo_medio =</span> <span class="fu">mean</span>(at, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(ativo_medio))</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibe os resultados</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>ativo_medio_bancos</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 2
+   co_name                           ativo_medio
+   &lt;chr&gt;                                   &lt;dbl&gt;
+ 1 National Australia Bank Ltd           389925.
+ 2 Commonwealth Bank of Australia        371146.
+ 3 ANZ Bank New Zealand Limited          340187.
+ 4 Westpac Banking Corp                  143263.
+ 5 St. George Bank Ltd                    48321.
+ 6 Bank Of Western Australia              19105.
+ 7 Adelaide Bank Ltd                       8894.
+ 8 Bendigo and Adelaide Bank Limited       7990.
+ 9 Bank of Queensland Ltd                  6603.
+10 BNK Banking Corp Ltd                    1435.</code></pre>
+</div>
 </div>
 <p><strong>c)</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pipeline completo integrando dados de ativo e retorno</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>analise_categorias <span class="ot">&lt;-</span> dados_integrados <span class="sc">%&gt;%</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calcula ativo médio e retorno médio por banco</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(co_name) <span class="sc">%&gt;%</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">ativo_medio =</span> <span class="fu">mean</span>(at, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">retorno_medio =</span> <span class="fu">mean</span>(ret, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Cria categorias de tamanho usando case_when</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">categoria_tamanho =</span> <span class="fu">case_when</span>(</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>      ativo_medio <span class="sc">&lt;</span> <span class="dv">50000</span> <span class="sc">~</span> <span class="st">&quot;Pequeno&quot;</span>,</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>      ativo_medio <span class="sc">&gt;=</span> <span class="dv">50000</span> <span class="sc">&amp;</span> ativo_medio <span class="sc">&lt;=</span> <span class="dv">200000</span> <span class="sc">~</span> <span class="st">&quot;Médio&quot;</span>,</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>      ativo_medio <span class="sc">&gt;</span> <span class="dv">200000</span> <span class="sc">~</span> <span class="st">&quot;Grande&quot;</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibe o resultado</span></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>analise_categorias</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pipeline completo integrando dados de ativo e retorno</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>analise_categorias <span class="ot">&lt;-</span> dados_integrados <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calcula ativo médio e retorno médio por banco</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(co_name) <span class="sc">%&gt;%</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">ativo_medio =</span> <span class="fu">mean</span>(at, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">retorno_medio =</span> <span class="fu">mean</span>(ret, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Cria categorias de tamanho usando case_when</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">categoria_tamanho =</span> <span class="fu">case_when</span>(</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>      ativo_medio <span class="sc">&lt;</span> <span class="dv">50000</span> <span class="sc">~</span> <span class="st">&quot;Pequeno&quot;</span>,</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>      ativo_medio <span class="sc">&gt;=</span> <span class="dv">50000</span> <span class="sc">&amp;</span> ativo_medio <span class="sc">&lt;=</span> <span class="dv">200000</span> <span class="sc">~</span> <span class="st">&quot;Médio&quot;</span>,</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>      ativo_medio <span class="sc">&gt;</span> <span class="dv">200000</span> <span class="sc">~</span> <span class="st">&quot;Grande&quot;</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibe o resultado</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>analise_categorias</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 4
+   co_name                           ativo_medio retorno_medio categoria_tamanho
+   &lt;chr&gt;                                   &lt;dbl&gt;         &lt;dbl&gt; &lt;chr&gt;            
+ 1 ANZ Bank New Zealand Limited          340187.       0.0150  Grande           
+ 2 Adelaide Bank Ltd                       8894.       0.00964 Pequeno          
+ 3 BNK Banking Corp Ltd                    1435.      -0.139   Pequeno          
+ 4 Bank Of Western Australia              19105.       0.0149  Pequeno          
+ 5 Bank of Queensland Ltd                  6603.       0.00116 Pequeno          
+ 6 Bendigo and Adelaide Bank Limited       7990.       0.00648 Pequeno          
+ 7 Commonwealth Bank of Australia        371146.       0.00633 Grande           
+ 8 National Australia Bank Ltd           389925.       0.0132  Grande           
+ 9 St. George Bank Ltd                    48321.       0.0147  Pequeno          
+10 Westpac Banking Corp                  143263.       0.00983 Médio            </code></pre>
+</div>
 </div>
 </section>
 
