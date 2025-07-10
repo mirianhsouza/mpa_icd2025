@@ -278,7 +278,7 @@ fcubica <- function(x) {
 }
 
 # Encontrando uma raiz no intervalo [-10, 10]
-fzero(fcubica, c(2, 3))
+fzero(fcubica, c(2,3))
 ```
 
 
@@ -454,14 +454,52 @@ os gráficos das seguintes funcões:
 a. A função de demanda linear é definida como: $f(x) = 50 - 2x$
 onde $x$ é a quantidade demandada e $f(x)$ é o preço.
 
+```{r}
+funcion_demanda <- function(x) {
+  return(50 - 2 * x)
+}
+
+curve(funcion_demanda(x), 
+      from = 0, to = 30, 
+      xlab = "Quantidade Demandada (x)",
+      ylab = "Preço (f(x))",
+      main = "Função de Demanda Linear: f(x) = 50 - 2x",
+      lwd = 2)
+```
+
+
 b. A função de utilidade Cobb-Douglas é definida como:
 $f(x) = 10x^{0.5}$, onde $x$ é a quantidade de um 
 bem e $f(x)$ é a utilidade.
+
+```{r}
+funcao_utilidade <- function(x) {
+  return(10 * x^0.5)
+}
+curve(funcao_utilidade(x), 
+      from = 0,
+      to = 20, 
+      ylab = "Utilidade (f(x))",
+      main = "Função de Utilidade Cobb-Douglas: f(x) = 10 * x^0.5",
+      lwd = 2)
+```
+
 
 c. A função de crescimento logístico é definida como:
 $f(x) = \frac{100}{1 + e^{-0.1(x - 50)}}$
 onde $x$ é o tempo.
 
+```{r}
+funcao_logistica <- function(x) {
+  return(100 / (1 + exp(-0.1 * (x - 50))))
+}
+curve(funcao_logistica(x), 
+      from = 0, to = 100,
+      xlab = "Tempo (x)",
+      ylab = "f(x)",
+      main = "Função de Crescimento Logístico",
+      lwd = 2)
+```
 
 
 
@@ -474,9 +512,34 @@ função quadrática:
 $$
 f(x) = -2x^2 + 4x + 1
 $$
+```{r}
+f <- function(x) {
+  -2*x^2 + 4*x + 1
+}
+resultado <- optimize(f, interval = c(-10, 10), maximum = TRUE)
+resultado
+```
+```{r}
+f <- function(x) {
+  -2*x^2 + 4*x + 1
+}
 
+x_vals <- seq(-2, 4, length.out = 500)
 
+y_vals <- f(x_vals)
 
+resultado <- optimize(f, interval = c(-5, 5), maximum = TRUE)
+
+plot(x_vals, y_vals, type = "l", col = "blue", lwd = 2,
+     xlab = "x", ylab = "f(x)",
+     main = "Gráfico da função f(x) = -2x^2 + 4x + 1")
+
+points(resultado$maximum, resultado$objective, col = "red", pch = 19, cex = 1.5)
+text(resultado$maximum, resultado$objective,
+     labels = paste0("Máximo: x = ", round(resultado$maximum, 2), 
+                     ", f(x) = ", round(resultado$objective, 2)),
+     pos = 3, col = "red")
+```
 
 
 ## Propriedades dos EMV via Simulação de MC 
